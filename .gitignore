@@ -2,6 +2,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/
 
 ### Eclipse ###
 .apt_generated
@@ -28,5 +29,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-# IntelliJ IDEA
-.idea/
+# TaskCli
+tasks.json
+task_ids.txt
