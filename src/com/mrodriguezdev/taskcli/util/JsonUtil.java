@@ -54,8 +54,8 @@ public class JsonUtil {
 
         for (String pair : keyValuePairs) {
             String[] entry = pair.split(":");
-            String key = entry[0].trim().replaceAll("^\"|\"$", ""); // Remove surrounding quotes from key
-            String value = entry[1].trim().replaceAll("^\"|\"$", ""); // Remove surrounding quotes from value
+            String key = entry[0].trim().replaceAll("^\"|\"$", "");
+            String value = entry[1].trim().replaceAll("^\"|\"$", "");
 
             switch (key) {
                 case "id" -> task.setId(Long.parseLong(value));

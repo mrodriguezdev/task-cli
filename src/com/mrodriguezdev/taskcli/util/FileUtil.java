@@ -1,5 +1,6 @@
 package com.mrodriguezdev.taskcli.util;
 
+import com.mrodriguezdev.taskcli.exception.FileUtilException;
 import com.mrodriguezdev.taskcli.model.Task;
 
 import java.io.*;
@@ -12,7 +13,7 @@ public class FileUtil {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             writer.print(content);
         } catch (IOException e) {
-            throw new RuntimeException("Error creating the file: " + name, e);
+            throw new FileUtilException("Error creating the file: " + name, e);
         }
     }
 
@@ -21,7 +22,7 @@ public class FileUtil {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             writer.println(content);
         } catch (IOException e) {
-            throw new RuntimeException("Error creating the file: " + name, e);
+            throw new FileUtilException("Error creating the file: " + name, e);
         }
     }
 
@@ -39,7 +40,7 @@ public class FileUtil {
                 sb.append(line).append("\n");
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading the file: " + name, e);
+            throw new FileUtilException("Error reading the file: " + name, e);
         }
 
         return sb.toString().trim();
@@ -63,7 +64,7 @@ public class FileUtil {
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading the file: " + name, e);
+            throw new FileUtilException("Error reading the file: " + name, e);
         }
 
         return tasks;
