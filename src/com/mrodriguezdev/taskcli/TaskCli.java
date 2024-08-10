@@ -25,6 +25,7 @@ public class TaskCli {
                 Task newTask = command.add(args[1]);
                 System.out.printf("Task added successfully (ID: %d)%n", newTask.getId());
             }
+            case "list" -> System.out.println(command.list());
             default -> throw new InvalidCommandException(
                     String.format("The command '%s' is invalid. Please provide a valid command.", commandName));
         }

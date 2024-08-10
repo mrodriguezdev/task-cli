@@ -4,9 +4,11 @@ import com.mrodriguezdev.taskcli.exception.JsonSerializerException;
 import com.mrodriguezdev.taskcli.model.Task;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class JsonUtil {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH");
     public static String toJson(Object o) {
         if (Objects.isNull(o)) {
             throw new JsonSerializerException("The object to serialize cannot be null");
@@ -38,14 +40,22 @@ public class JsonUtil {
             throw new JsonSerializerException("Only Task objects can be deserialized");
         }
 
-        json = json.replaceAll("[{}\"]", "");
-        String[] keyValuePairs = json.split(",");
-
         Task task = new Task();
+
+        json = json.trim();
+        if (json.startsWith("{")) {
+            json = json.substring(1);
+        }
+        if (json.endsWith("}")) {
+            json = json.substring(0, json.length() - 1);
+        }
+
+        String[] keyValuePairs = json.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
         for (String pair : keyValuePairs) {
             String[] entry = pair.split(":");
-            String key = entry[0].trim();
-            String value = entry[1].trim();
+            String key = entry[0].trim().replaceAll("^\"|\"$", ""); // Remove surrounding quotes from key
+            String value = entry[1].trim().replaceAll("^\"|\"$", ""); // Remove surrounding quotes from value
 
             switch (key) {
                 case "id" -> task.setId(Long.parseLong(value));
@@ -55,14 +65,14 @@ public class JsonUtil {
                     if ("null".equals(value)) {
                         task.setCreatedAt(null);
                     } else {
-                        task.setCreatedAt(LocalDateTime.parse(value));
+                        task.setCreatedAt(LocalDateTime.parse(value, formatter));
                     }
                 }
                 case "updatedAt" -> {
                     if ("null".equals(value)) {
                         task.setUpdatedAt(null);
                     } else {
-                        task.setUpdatedAt(LocalDateTime.parse(value));
+                        task.setUpdatedAt(LocalDateTime.parse(value, formatter));
                     }
                 }
             }

@@ -1,6 +1,10 @@
 package com.mrodriguezdev.taskcli.util;
 
+import com.mrodriguezdev.taskcli.model.Task;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
     public static void createTxt(String name, String content) {
@@ -39,6 +43,30 @@ public class FileUtil {
         }
 
         return sb.toString().trim();
+    }
+
+    public static List<Task> readJson(String name) {
+        File file = new File(name);
+        List<Task> tasks = new ArrayList<>();
+
+        try {
+            if (file.exists() && file.length() > 0) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        line = line.trim();
+                        if (!line.isEmpty()) {
+                            Task task = JsonUtil.fromJson(line, Task.class);
+                            tasks.add(task);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading the file: " + name, e);
+        }
+
+        return tasks;
     }
 
 }

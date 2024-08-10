@@ -74,12 +74,15 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        String createdAt = this.getCreatedAt() != null ? this.getCreatedAt().toString() : "null";
+        String updatedAt = this.getUpdatedAt() != null ? this.getUpdatedAt().toString() : "null";
+        return String.format(
+                "{\"id\":%d,\"description\":\"%s\",\"status\":\"%s\",\"createdAt\":\"%s\",\"updatedAt\":\"%s\"}",
+                this.getId(),
+                this.getDescription(),
+                this.getStatus(),
+                createdAt,
+                updatedAt
+        );
     }
 }

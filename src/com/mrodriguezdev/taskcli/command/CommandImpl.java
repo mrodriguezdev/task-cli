@@ -10,6 +10,8 @@ public class CommandImpl implements Command {
     String tasksPath = path + "/tasks.json";
     String taskIdsPath = path + "/task_ids.txt";
     AddCommand addCommand = new AddCommand();
+    ListCommand listCommand = new ListCommand();
+
     @Override
     public Task add(String description) {
         return addCommand.add(description, tasksPath, taskIdsPath);
@@ -32,7 +34,7 @@ public class CommandImpl implements Command {
 
     @Override
     public List<Task> list() {
-        return null;
+        return listCommand.list(tasksPath);
     }
 
     @Override
