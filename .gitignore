@@ -32,3 +32,4 @@ bin/
 # TaskCli
 tasks.json
 task_ids.txt
+task-cli.jar
