@@ -36,7 +36,7 @@ task-cli add "Buy groceries"
 task-cli update 1 "Buy groceries and cook dinner"
 task-cli delete 1
 ```
-**Output: Tarea actualizada exitosamente (ID: 1)**
+**Output: Tarea actualizada exitosamente (ID: 1)**  
 **Output: Tarea eliminada exitosamente (ID: 1)**
 
 ### Marcar una tarea como en progreso o realizada
@@ -44,7 +44,7 @@ task-cli delete 1
 task-cli mark-in-progress 1
 task-cli mark-done 1
 ```
-**Output: Tarea marcada como en progreso exitosamente (ID: 1)**
+**Output: Tarea marcada como en progreso exitosamente (ID: 1)**  
 **Output: Tarea marcada como realizada exitosamente (ID: 1)**
 
 ### Listar todas las tareas
@@ -67,3 +67,25 @@ Cada tarea debe tener las siguientes propiedades:
 - `status`: El estado de la tarea (todo, in-progress, done).
 - `createdAt`: La fecha y hora en que se creó la tarea.
 - `updatedAt`: La fecha y hora en que se actualizó la tarea por última vez.
+
+# Compilar y ejecutar el proyecto en formato `.jar`
+Para utilizar el proyecto desde la línea de comandos, primero debemos compilar el código fuente y empaquetarlo en un archivo `.jar`. Sigue estos pasos:
+
+1. **Compila el código fuente:**  
+    Ejecuta el siguiente comando en la raíz del proyecto para compilar los archivos `.java` y crear el directorio bin con los archivos `.class` generados:
+    ```bash
+    javac -d bin $(find src -name "*.java")
+    ```
+
+2. **Crea el archivo `.jar`:**  
+   Una vez compilado el código, genera el archivo `.jar` con el siguiente comando:
+    ```bash
+    jar cfe task-cli.jar com.mrodriguezdev.taskcli.TaskCli -C bin .
+    ```
+
+3. **Ejecutar el archivo `.jar`:**  
+   Puedes ejecutar el archivo `.jar` con el siguiente comando. Los comandos específicos para la aplicación se añaden después del nombre del archivo `.jar`. Por ejemplo, para listar todas las tareas, usa:
+    ```bash
+    java -jar task-cli.jar list
+    ```
+   
