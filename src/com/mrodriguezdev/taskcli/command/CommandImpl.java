@@ -37,6 +37,6 @@ public class CommandImpl implements Command {
 
     @Override
     public String listBy(Status status) {
-        return null;
+        return listCommand.listBy(tasksPath, status);
     }
 }
