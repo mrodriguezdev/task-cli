@@ -14,7 +14,7 @@ public class JsonUtil {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH");
     public static String toJson(Task task) {
         if (Objects.isNull(task)) {
-            throw new JsonSerializerException("The object to serialize cannot be null");
+            throw new JsonSerializerException("El objeto a serializar no puede ser nulo.");
         }
 
         String createdAt = task.getCreatedAt() != null ? task.getCreatedAt().toString() : "null";
@@ -32,7 +32,7 @@ public class JsonUtil {
 
     public static String toJson(TaskJsonWrapper taskJsonWrapper) {
         if (Objects.isNull(taskJsonWrapper)) {
-            throw new JsonSerializerException("The object to serialize cannot be null");
+            throw new JsonSerializerException("El objeto a serializar no puede ser nulo.");
         }
 
         List<Task> tasks = taskJsonWrapper.getTasks();
@@ -58,11 +58,11 @@ public class JsonUtil {
 
     public static <T> T fromJson(String json, Class<T> clazz) {
         if (json == null || json.isEmpty()) {
-            throw new JsonSerializerException("The provided JSON cannot be null or empty");
+            throw new JsonSerializerException("El JSON proporcionado no puede ser nulo o vacío.");
         }
 
         if (!clazz.equals(Task.class)) {
-            throw new JsonSerializerException("Only Task objects can be deserialized");
+            throw new JsonSerializerException("Solo se pueden deserializar objetos de tipo Task.");
         }
 
         Task task = new Task();
@@ -108,7 +108,7 @@ public class JsonUtil {
 
     public static TaskJsonWrapper fromJson(String json) {
         if (Objects.isNull(json) || json.isEmpty()) {
-            throw new JsonSerializerException("The JSON string cannot be null or empty");
+            throw new JsonSerializerException("La cadena JSON no puede ser nula o vacía.");
         }
 
         TaskJsonWrapper taskJsonWrapper = new TaskJsonWrapper();
@@ -140,7 +140,7 @@ public class JsonUtil {
 
             taskJsonWrapper.setTasks(tasks);
         } catch (Exception e) {
-            throw new JsonSerializerException("Error deserializing the JSON string");
+            throw new JsonSerializerException("Error al deserializar la cadena JSON.");
         }
 
         return taskJsonWrapper;

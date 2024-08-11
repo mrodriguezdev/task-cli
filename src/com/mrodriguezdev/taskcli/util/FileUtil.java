@@ -10,7 +10,7 @@ public class FileUtil {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             writer.print(content);
         } catch (IOException e) {
-            throw new FileUtilException("Error creating the file: " + name, e);
+            throw new FileUtilException("Error creando el archivo: " + name, e);
         }
     }
 
@@ -28,7 +28,7 @@ public class FileUtil {
                 sb.append(line).append("\n");
             }
         } catch (IOException e) {
-            throw new FileUtilException("Error reading the file: " + name, e);
+            throw new FileUtilException("Error leyendo el archivo: " + name, e);
         }
 
         return sb.toString().trim();
@@ -48,7 +48,7 @@ public class FileUtil {
                 }
             }
         } catch (IOException e) {
-            throw new FileUtilException("Error reading the file: " + name, e);
+            throw new FileUtilException("Error leyendo el archivo: " + name, e);
         }
 
         return jsonContent.toString();

@@ -29,23 +29,23 @@ La lista de comandos y su uso se da a continuación:
 ```bash
 task-cli add "Buy groceries"
 ```
-**Output: Task added successfully (ID: 1)**
+**Output: Tarea agregada exitosamente (ID: 1)**
 
 ### Actualizar y eliminar tareas
 ```bash
 task-cli update 1 "Buy groceries and cook dinner"
 task-cli delete 1
 ```
-**Output: Task updated successfully (ID: 1)**
-**Output: Task deleted successfully (ID: 1)**
+**Output: Tarea actualizada exitosamente (ID: 1)**
+**Output: Tarea eliminada exitosamente (ID: 1)**
 
 ### Marcar una tarea como en progreso o realizada
 ```bash
 task-cli mark-in-progress 1
 task-cli mark-done 1
 ```
-**Output: Task marked in progress successfully (ID: 1)**
-**Output: Task marked done successfully (ID: 1)**
+**Output: Tarea marcada como en progreso exitosamente (ID: 1)**
+**Output: Tarea marcada como realizada exitosamente (ID: 1)**
 
 ### Listar todas las tareas
 ```bash

@@ -13,7 +13,7 @@ public class ListCommand {
     public String list(String name) {
         String json = FileUtil.readJsonAsString(name);
         if (json.isEmpty()) {
-            throw new TaskNotFoundException("No tasks found in the specified file.");
+            throw new TaskNotFoundException("No se encontraron tareas en el archivo especificado.");
         }
         TaskJsonWrapper taskJsonWrapper = JsonUtil.fromJson(json);
         return JsonUtil.toJson(taskJsonWrapper);
@@ -22,7 +22,7 @@ public class ListCommand {
     public String listBy(String name, Status status) {
         String json = FileUtil.readJsonAsString(name);
         if (json.isEmpty()) {
-            throw new TaskNotFoundException("No tasks found in the specified file.");
+            throw new TaskNotFoundException("No se encontraron tareas en el archivo especificado.");
         }
 
         TaskJsonWrapper taskJsonWrapper = JsonUtil.fromJson(json);
@@ -31,7 +31,7 @@ public class ListCommand {
                 .toList();
 
         if (filteredTasks.isEmpty()) {
-            throw new TaskNotFoundException(String.format("No tasks found with status '%s'.", status.get()));
+            throw new TaskNotFoundException(String.format("No se encontraron tareas con el estado '%s'.", status.get()));
         }
 
         taskJsonWrapper.setTasks(filteredTasks);

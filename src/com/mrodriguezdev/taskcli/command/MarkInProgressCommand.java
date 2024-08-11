@@ -13,7 +13,7 @@ public class MarkInProgressCommand {
     public void modify(String status, Long id, String name) {
         String json = FileUtil.readJsonAsString(name);
         if (json.isEmpty()) {
-            throw new TaskNotFoundException("No tasks found in the specified file.");
+            throw new TaskNotFoundException("No se encontraron tareas en el archivo especificado.");
         }
 
         TaskJsonWrapper taskJsonWrapper = JsonUtil.fromJson(json);
@@ -22,7 +22,7 @@ public class MarkInProgressCommand {
         Task updatedTask = tasks.stream()
                 .filter(task -> task.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new TaskNotFoundException(String.format("No task found with id '%d'", id)));
+                .orElseThrow(() -> new TaskNotFoundException(String.format("No se encontró ninguna tarea con el ID '%d'.", id)));
 
         updatedTask.setStatus(status);
         updatedTask.setUpdatedAt(LocalDateTime.now());

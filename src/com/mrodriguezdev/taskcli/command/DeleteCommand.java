@@ -12,7 +12,7 @@ public class DeleteCommand {
     public void delete(Long id, String name) {
         String json = FileUtil.readJsonAsString(name);
         if (json.isEmpty()) {
-            throw new TaskNotFoundException("No tasks found in the specified file.");
+            throw new TaskNotFoundException("No se encontraron tareas en el archivo especificado.");
         }
 
         TaskJsonWrapper taskJsonWrapper = JsonUtil.fromJson(json);
@@ -21,7 +21,7 @@ public class DeleteCommand {
         Task deletedTask = tasks.stream()
                 .filter(task -> task.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new TaskNotFoundException(String.format("No task found with id '%d'", id)));
+                .orElseThrow(() -> new TaskNotFoundException(String.format("No se encontró ninguna tarea con el ID '%d'.", id)));
 
         tasks.remove(deletedTask);
         String updatedJson = JsonUtil.toJson(new TaskJsonWrapper(tasks));

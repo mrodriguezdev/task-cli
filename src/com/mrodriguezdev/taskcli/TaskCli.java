@@ -3,79 +3,74 @@ package com.mrodriguezdev.taskcli;
 import com.mrodriguezdev.taskcli.command.Command;
 import com.mrodriguezdev.taskcli.command.CommandImpl;
 import com.mrodriguezdev.taskcli.exception.InvalidCommandException;
-import com.mrodriguezdev.taskcli.exception.InvalidStatusException;
+import com.mrodriguezdev.taskcli.exception.TaskOperationException;
 import com.mrodriguezdev.taskcli.model.Status;
 import com.mrodriguezdev.taskcli.model.Task;
+import com.mrodriguezdev.taskcli.validator.TaskValidator;
 
 public class TaskCli {
-    public static void main(String[] args) {
+    private static final Command command = new CommandImpl();
 
+    public static void main(String[] args) {
         if (args.length == 0) {
-            System.err.println("Please provide arguments or parameters to execute an action.");
-            System.exit(1);
+            showError("Por favor, proporcione argumentos o parámetros para ejecutar una acción.");
+            return;
         }
 
-        String commandName = args[0];
-
-        Command command = new CommandImpl();
-        switch (commandName) {
-            case "add" -> {
-                if (args.length < 2) {
-                    System.err.println("Please provide a task description to add.");
-                    System.exit(1);
+        String commandName = args[0].toLowerCase();
+        try {
+            switch (commandName) {
+                case "add" -> {
+                    TaskValidator.validateAddArgs(args);
+                    Task newTask = command.add(args[1]);
+                    System.out.printf("Tarea agregada exitosamente (ID: %d)", newTask.getId());
                 }
-                Task newTask = command.add(args[1]);
-                System.out.printf("Task added successfully (ID: %d)", newTask.getId());
-            }
-            case "update" -> {
-                if (args.length < 3) {
-                    System.err.println("Please provide a task description to update and id.");
-                    System.exit(1);
+                case "update" -> {
+                    TaskValidator.validateUpdateArgs(args);
+                    long updateId = TaskValidator.parseLongId(args[1]);
+                    command.update(args[2], updateId);
+                    System.out.printf("Tarea actualizada exitosamente (ID: %d)", updateId);
                 }
-                long id = Long.parseLong(args[1]);
-                command.update(args[2], id);
-                System.out.printf("Task updated successfully (ID: %d)", id);
-            }
-            case "mark-in-progress" -> {
-                if (args.length < 2) {
-                    System.err.println("Please provide a task id to modify.");
-                    System.exit(1);
+                case "mark-in-progress" -> {
+                    TaskValidator.validateMarkStatusArgs(args);
+                    long inProgressId = TaskValidator.parseLongId(args[1]);
+                    command.modifyStatus(Status.IN_PROGRESS, inProgressId);
+                    System.out.printf("Tarea marcada como en progreso exitosamente (ID: %d)", inProgressId);
                 }
-                long id = Long.parseLong(args[1]);
-                command.modifyStatus(Status.IN_PROGRESS, id);
-                System.out.printf("Task marked in progress successfully (ID: %d)", id);
-            }
-            case "mark-done" -> {
-                if (args.length < 2) {
-                    System.err.println("Please provide a task id to modify.");
-                    System.exit(1);
+                case "mark-done" -> {
+                    TaskValidator.validateMarkStatusArgs(args);
+                    long doneId = TaskValidator.parseLongId(args[1]);
+                    command.modifyStatus(Status.DONE, doneId);
+                    System.out.printf("Tarea marcada como realizada exitosamente (ID: %d)", doneId);
                 }
-                long id = Long.parseLong(args[1]);
-                command.modifyStatus(Status.DONE, id);
-                System.out.printf("Task marked done successfully (ID: %d)", id);
-            }
-            case "delete" -> {
-                if (args.length < 2) {
-                    System.err.println("Please provide a task id to delete.");
-                    System.exit(1);
+                case "delete" -> {
+                    TaskValidator.validateDeleteArgs(args);
+                    long deleteId = TaskValidator.parseLongId(args[1]);
+                    command.delete(deleteId);
+                    System.out.printf("Tarea eliminada exitosamente (ID: %d)", deleteId);
                 }
-                long id = Long.parseLong(args[1]);
-                command.delete(id);
-                System.out.printf("Task deleted successfully (ID: %d)", id);
-            }
-            case "list" -> {
-                if (args.length < 2) System.out.println(command.list());
-                else {
-                    String status = args[1];
-                    if (Status.TODO.get().equals(status)) System.out.println(command.listBy(Status.TODO));
-                    else if (Status.IN_PROGRESS.get().equals(status)) System.out.println(command.listBy(Status.IN_PROGRESS));
-                    else if (Status.DONE.get().equals(status)) System.out.println(command.listBy(Status.DONE));
-                    else throw new InvalidStatusException(
-                            String.format("The status '%s' is invalid. Please provide a valid status.", status));
+                case "list" -> {
+                    TaskValidator.validateListArgs(args);
+                    if (args.length == 1) {
+                        System.out.println(command.list());
+                    } else {
+                        String status = args[1];
+                        Status taskStatus = TaskValidator.parseStatus(status);
+                        System.out.println(command.listBy(taskStatus));
+                    }
                 }
+                default -> throw new InvalidCommandException(
+                        String.format("El comando '%s' no es válido. Por favor, proporcione un comando válido.", commandName));
             }
-            default -> throw new InvalidCommandException(
-                    String.format("The command '%s' is invalid. Please provide a valid command.", commandName));
+        } catch (TaskOperationException toe) {
+            showError(toe.getMessage());
+        } catch (Exception e) {
+            showError("Ocurrió un error inesperado: " + e.getMessage());
         }
     }
+
+    private static void showError(String message) {
+        System.err.println(message);
+    }
 }
+
