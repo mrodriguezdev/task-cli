@@ -9,6 +9,7 @@ public class CommandImpl implements Command {
     String taskIdsPath = path + "/task_ids.txt";
     AddCommand addCommand = new AddCommand();
     UpdateCommand updateCommand = new UpdateCommand();
+    DeleteCommand deleteCommand = new DeleteCommand();
     ListCommand listCommand = new ListCommand();
 
     @Override
@@ -23,7 +24,7 @@ public class CommandImpl implements Command {
 
     @Override
     public void delete(Long id) {
-
+        deleteCommand.delete(id, tasksPath);
     }
 
     @Override

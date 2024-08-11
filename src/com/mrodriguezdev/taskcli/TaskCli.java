@@ -34,7 +34,16 @@ public class TaskCli {
                 }
                 long id = Long.parseLong(args[1]);
                 command.update(args[2], id);
-                System.out.printf("Task '%d' updated successfully", id);
+                System.out.printf("Task updated successfully (ID: %d)", id);
+            }
+            case "delete" -> {
+                if (args.length < 2) {
+                    System.err.println("Please provide a task id to delete.");
+                    System.exit(1);
+                }
+                long id = Long.parseLong(args[1]);
+                command.delete(id);
+                System.out.printf("Task deleted successfully (ID: %d)", id);
             }
             case "list" -> {
                 if (args.length < 2) System.out.println(command.list());

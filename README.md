@@ -36,6 +36,8 @@ task-cli add "Buy groceries"
 task-cli update 1 "Buy groceries and cook dinner"
 task-cli delete 1
 ```
+**Output: Task updated successfully (ID: 1)**
+**Output: Task deleted successfully (ID: 1)**
 
 ### Marcar una tarea como en progreso o realizada
 ```bash
