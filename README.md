@@ -44,6 +44,8 @@ task-cli delete 1
 task-cli mark-in-progress 1
 task-cli mark-done 1
 ```
+**Output: Task marked in progress successfully (ID: 1)**
+**Output: Task marked done successfully (ID: 1)**
 
 ### Listar todas las tareas
 ```bash

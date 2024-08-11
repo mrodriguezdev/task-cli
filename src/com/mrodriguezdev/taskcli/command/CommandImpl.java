@@ -9,6 +9,8 @@ public class CommandImpl implements Command {
     String taskIdsPath = path + "/task_ids.txt";
     AddCommand addCommand = new AddCommand();
     UpdateCommand updateCommand = new UpdateCommand();
+    MarkInProgressCommand markInProgressCommand = new MarkInProgressCommand();
+    MarkDoneCommand markDoneCommand = new MarkDoneCommand();
     DeleteCommand deleteCommand = new DeleteCommand();
     ListCommand listCommand = new ListCommand();
 
@@ -29,7 +31,8 @@ public class CommandImpl implements Command {
 
     @Override
     public void modifyStatus(Status status, Long id) {
-
+        if (status.equals(Status.IN_PROGRESS)) markInProgressCommand.modify(status.get(), id, tasksPath);
+        else if (status.equals(Status.DONE)) markDoneCommand.modify(status.get(), id, tasksPath);
     }
 
     @Override

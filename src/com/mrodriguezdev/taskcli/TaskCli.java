@@ -36,6 +36,24 @@ public class TaskCli {
                 command.update(args[2], id);
                 System.out.printf("Task updated successfully (ID: %d)", id);
             }
+            case "mark-in-progress" -> {
+                if (args.length < 2) {
+                    System.err.println("Please provide a task id to modify.");
+                    System.exit(1);
+                }
+                long id = Long.parseLong(args[1]);
+                command.modifyStatus(Status.IN_PROGRESS, id);
+                System.out.printf("Task marked in progress successfully (ID: %d)", id);
+            }
+            case "mark-done" -> {
+                if (args.length < 2) {
+                    System.err.println("Please provide a task id to modify.");
+                    System.exit(1);
+                }
+                long id = Long.parseLong(args[1]);
+                command.modifyStatus(Status.DONE, id);
+                System.out.printf("Task marked done successfully (ID: %d)", id);
+            }
             case "delete" -> {
                 if (args.length < 2) {
                     System.err.println("Please provide a task id to delete.");
