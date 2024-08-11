@@ -17,10 +17,10 @@ public class FileUtil {
         }
     }
 
-    public static void createJson(String name, String content) {
+    public static void create(String name, String content) {
         File file = new File(name);
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.println(content);
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+            writer.print(content);
         } catch (IOException e) {
             throw new FileUtilException("Error creating the file: " + name, e);
         }
@@ -68,6 +68,26 @@ public class FileUtil {
         }
 
         return tasks;
+    }
+
+    public static String readJsonAsString(String name) {
+        File file = new File(name);
+        StringBuilder jsonContent = new StringBuilder();
+
+        try {
+            if (file.exists() && file.length() > 0) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        jsonContent.append(line.trim());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new FileUtilException("Error reading the file: " + name, e);
+        }
+
+        return jsonContent.toString();
     }
 
 }
