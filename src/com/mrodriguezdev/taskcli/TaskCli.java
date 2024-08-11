@@ -25,7 +25,16 @@ public class TaskCli {
                     System.exit(1);
                 }
                 Task newTask = command.add(args[1]);
-                System.out.printf("Task added successfully (ID: %d)%n", newTask.getId());
+                System.out.printf("Task added successfully (ID: %d)", newTask.getId());
+            }
+            case "update" -> {
+                if (args.length < 3) {
+                    System.err.println("Please provide a task description to update and id.");
+                    System.exit(1);
+                }
+                long id = Long.parseLong(args[1]);
+                command.update(args[2], id);
+                System.out.printf("Task '%d' updated successfully", id);
             }
             case "list" -> {
                 if (args.length < 2) System.out.println(command.list());
