@@ -3,8 +3,6 @@ package com.mrodriguezdev.taskcli.command;
 import com.mrodriguezdev.taskcli.model.Status;
 import com.mrodriguezdev.taskcli.model.Task;
 
-import java.util.List;
-
 public class CommandImpl implements Command {
     String path = System.getProperty("user.dir");
     String tasksPath = path + "/tasks.json";
@@ -33,12 +31,12 @@ public class CommandImpl implements Command {
     }
 
     @Override
-    public List<Task> list() {
+    public String list() {
         return listCommand.list(tasksPath);
     }
 
     @Override
-    public List<Task> listBy(Status status) {
+    public String listBy(Status status) {
         return null;
     }
 }

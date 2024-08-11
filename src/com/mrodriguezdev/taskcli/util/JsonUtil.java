@@ -131,7 +131,7 @@ public class JsonUtil {
                             taskJson = taskJson.startsWith("{") ? taskJson : "{" + taskJson;
                             taskJson = taskJson.endsWith("}") ? taskJson : taskJson + "}";
 
-                            Task task = JsonUtil.fromJson(taskJson, Task.class);
+                            Task task = fromJson(taskJson, Task.class);
                             tasks.add(task);
                         }
                     }
