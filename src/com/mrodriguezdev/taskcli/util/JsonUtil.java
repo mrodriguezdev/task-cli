@@ -4,14 +4,11 @@ import com.mrodriguezdev.taskcli.exception.JsonSerializerException;
 import com.mrodriguezdev.taskcli.model.Task;
 import com.mrodriguezdev.taskcli.model.TaskJsonWrapper;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class JsonUtil {
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH");
     public static String toJson(Task task) {
         if (Objects.isNull(task)) {
             throw new JsonSerializerException("El objeto a serializar no puede ser nulo.");
@@ -55,7 +52,6 @@ public class JsonUtil {
         return jsonBuilder.toString();
     }
 
-
     public static <T> T fromJson(String json, Class<T> clazz) {
         if (json == null || json.isEmpty()) {
             throw new JsonSerializerException("El JSON proporcionado no puede ser nulo o vacío.");
@@ -90,14 +86,14 @@ public class JsonUtil {
                     if ("null".equals(value)) {
                         task.setCreatedAt(null);
                     } else {
-                        task.setCreatedAt(LocalDateTime.parse(value, formatter));
+                        task.setCreatedAt(LocalDateTimeUtil.parse(value));
                     }
                 }
                 case "updatedAt" -> {
                     if ("null".equals(value)) {
                         task.setUpdatedAt(null);
                     } else {
-                        task.setUpdatedAt(LocalDateTime.parse(value, formatter));
+                        task.setUpdatedAt(LocalDateTimeUtil.parse(value));
                     }
                 }
             }
